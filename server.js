@@ -16,8 +16,8 @@ app.get('/messages', function (req, res) {
 
 app.post('/messages', function (req, res) {
   const messageService = new MessageService(db);
-  const { environment, level, message } = req.body;
-  const response = messageService.create(environment, level, message);
+  const { application, environment, level, message } = req.body;
+  const response = messageService.create(application, environment, level, message );
   res.send({ message: response });
 });
 

@@ -7,16 +7,17 @@ class MessageService {
     this.db = db;
   }
 
-  create(environment, level, msg) {
-    const message = new Message(environment, level, msg);
+  create(application, environment, level, msg) {
+    const message = new Message(application, environment, level, msg);
     message.id = this.persist(message);
     return message;
   }
 
   persist(message) {
     const id = uuid.v1();
-    this.db.query('INSERT INTO messages(id, environment, level, message) VALUES(${id}, ${environment}, ${level}, ${message});', {
+    this.db.query('INSERT INTO messages(id, application, environment, level, message, timestamp) VALUES(${id}, ${application}, ${environment}, ${level}, ${message}, NOW());', {
       id,
+      application: message.application,
       environment: message.environment,
       level: message.level,
       message: message.message
